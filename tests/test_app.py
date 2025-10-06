@@ -76,7 +76,7 @@ def test_edit_product(client):
 
     # ✅ Verify DB record was updated
     with app.app_context():
-        updated = Product.query.get(product.id)
+        updated = db.session.get(Product, product.id)
         assert updated.name == 'Updated Test'
         assert updated.price == 200
 
@@ -92,5 +92,5 @@ def test_delete_product(client):
 
     # ✅ Verify DB record was deleted
     with app.app_context():
-        deleted = Product.query.get(product.id)
+        deleted = db.session.get(Product, product.id)
         assert deleted is None

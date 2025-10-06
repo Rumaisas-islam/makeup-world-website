@@ -29,10 +29,10 @@ def index():
 
 @app.route('/get_summary')
 def get_summary():
-    total_products = Product.query.count()
+    total_products = db.session.query(db.func.count(Product.id)).scalar()
     total_stock = db.session.query(db.func.sum(Product.stock)).scalar() or 0
-    low_stock = Product.query.filter(Product.stock <= 5, Product.stock > 0).count()
-    out_of_stock = Product.query.filter(Product.stock == 0).count()
+    low_stock = db.session.query(Product).filter(Product.stock <= 5, Product.stock > 0).count()
+    out_of_stock = db.session.query(Product).filter(Product.stock == 0).count()
 
     return jsonify({
         "total_products": total_products,
@@ -70,8 +70,7 @@ def show_products():
     category_filter = request.args.get("category", "")
     company_filter = request.args.get("company", "")
 
-    # Base query
-    products_query = Product.query
+    products_query = db.session.query(Product)
 
     if query:
         products_query = products_query.filter(Product.name.ilike(f"%{query}%"))
@@ -82,8 +81,8 @@ def show_products():
 
     products = products_query.all()
 
-    # Dropdown: distinct company names
-    companies = [p.company for p in Product.query.distinct(Product.company).all()]
+    # ✅ Fixed DISTINCT warning by using Python set
+    companies = list({p.company for p in db.session.query(Product).all()})
 
     return render_template("products.html", products=products, companies=companies)
 
@@ -92,24 +91,16 @@ def show_products():
 @login_required
 def add_product():
     if request.method == 'POST':
-        name = request.form['name']
-        price = request.form['price']
-        company = request.form['company']
-        category = request.form['category']
-        use = request.form['use']
-        stock = request.form['stock']
-
         new_product = Product(
-            name=name,
-            price=price,
-            company=company,
-            category=category,
-            use=use,
-            stock=stock
+            name=request.form['name'],
+            price=request.form['price'],
+            company=request.form['company'],
+            category=request.form['category'],
+            use=request.form['use'],
+            stock=request.form['stock']
         )
         db.session.add(new_product)
         db.session.commit()
-
         return redirect(url_for('show_products'))
 
     return render_template("add_product.html")
@@ -118,7 +109,11 @@ def add_product():
 @app.route('/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_product(id):
-    product = Product.query.get_or_404(id)
+    # ✅ Modern SQLAlchemy get()
+    product = db.session.get(Product, id)
+    if not product:
+        return "Product not found", 404
+
     if request.method == 'POST':
         product.name = request.form['name']
         product.price = request.form['price']
@@ -136,7 +131,11 @@ def edit_product(id):
 @app.route('/delete/<int:id>')
 @login_required
 def delete_product(id):
-    product = Product.query.get_or_404(id)
+    # ✅ Modern SQLAlchemy get()
+    product = db.session.get(Product, id)
+    if not product:
+        return "Product not found", 404
+
     db.session.delete(product)
     db.session.commit()
     return redirect(url_for('show_products'))
