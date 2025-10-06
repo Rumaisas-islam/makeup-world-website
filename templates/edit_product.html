@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Product</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: #fffafc;
+      font-family: 'Poppins', sans-serif;
+    }
+    .container {
+      max-width: 600px;
+      margin-top: 60px;
+      background: white;
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #ff4da6;
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: 25px;
+    }
+    .btn-submit {
+      background-color: #ff4da6;
+      color: white;
+      border: none;
+      width: 100%;
+      padding: 10px;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    .btn-submit:hover {
+      background-color: #ff1a8c;
+    }
+    a.back-link {
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 10px;
+      color: #555
+    }
+    a.back-link:hover {
+      color: #ff4da6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Edit Product</h2>
+    <form method="POST">
+      <div class="mb-3">
+        <label class="form-label">Product Name</label>
+        <input type="text" name="name" value="{{ product.name }}" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Price</label>
+        <input type="number" name="price" value="{{ product.price }}" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Company</label>
+        <input type="text" name="company" value="{{ product.company }}" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Category</label>
+        <select name="category" class="form-select" required>
+          <option value="Makeup" {% if product.category == "Makeup" %}selected{% endif %}>Makeup</option>
+          <option value="Skincare" {% if product.category == "Skincare" %}selected{% endif %}>Skincare</option>
+          <option value="Haircare" {% if product.category == "Haircare" %}selected{% endif %}>Haircare</option>
+          <option value="Fragrance" {% if product.category == "Fragrance" %}selected{% endif %}>Fragrance</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Use / Description</label>
+        <textarea name="use" class="form-control" rows="3" required>{{ product.use }}</textarea>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Stock Quantity</label>
+        <input type="number" name="stock" value="{{ product.stock }}" class="form-control" required>
+      </div>
+
+      <button type="submit" class="btn-submit">Update Product</button>
+      <a href="/products" class="back-link">← Back to Products</a>
+    </form>
+  </div>
+</body>
+</html>

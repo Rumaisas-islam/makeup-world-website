@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Matte Lipstick",
+    "price": 1200,
+    "company": "L'Oréal",
+    "category": "Makeup",
+    "use": "Lip Color",
+    "stock": 10
+  },
+  {
+    "id": 2,
+    "name": "Vitamin C Serum",
+    "price": 2500,
+    "company": "The Ordinary",
+    "category": "Skincare",
+    "use": "Brightening",
+    "stock": 5
+  }
+]

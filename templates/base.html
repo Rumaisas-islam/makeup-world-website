@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Makeup World</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Makeup World</h1>
+        <nav>
+            <a href="{{ url_for('show_products') }}" class="nav-btn">📦 Products</a>
+            <a href="{{ url_for('add_product') }}" class="nav-btn">➕ Add Product</a>
+            <a href="{{ url_for('logout') }}" class="nav-btn">↩️ Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>© 2025 Makeup World. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

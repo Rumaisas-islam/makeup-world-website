@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Makeup World</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffe6f0;
+            color: #333;
+        }
+
+        header {
+            background-color: #ff4da6;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #e60073;
+            margin-bottom: 10px;
+        }
+
+        .section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 12px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .section h2 {
+            color: #ff3399;
+            margin-bottom: 8px;
+        }
+
+        .section p {
+            margin: 8px 0 15px;
+            font-size: 15px;
+            color: #555;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 15px;
+            background-color: #ff4da6;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #e60073;
+        }
+
+        #summary {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #ffe6f0, #ffffff);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card i {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #ff4da6;
+        }
+
+        .card h3 {
+            margin: 5px 0;
+            color: #e60073;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .card p {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <header>💄 Makeup World</header>
+
+    <div class="container">
+        <h1>🎀 Welcome to Makeup World 🎀</h1>
+        <p>Manage all your makeup products easily and professionally!</p>
+
+        <!-- Products Section -->
+        <div class="section">
+            <h2>📦 Products</h2>
+            <p>View and manage your collection.</p>
+            <a href="{{ url_for('show_products') }}" class="btn">Go to Products</a>
+        </div>
+
+        <!-- Inventory Summary Section -->
+        <div class="section">
+            <h2>📊 Inventory Summary</h2>
+            <p>Check stock levels and product availability instantly.</p>
+            <a href="javascript:void(0)" class="btn" onclick="loadSummary()">Show Inventory</a>
+            <div id="summary">
+                <div class="cards">
+                    <div class="card">
+                        <i class="fas fa-boxes"></i>
+                        <h3>Total Products</h3>
+                        <p id="totalProducts">0</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-cubes"></i>
+                        <h3>Total Stock</h3>
+                        <p id="totalStock">0</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Low Stock</h3>
+                        <p id="lowStock">0</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-ban"></i>
+                        <h3>Out of Stock</h3>
+                        <p id="outOfStock">0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Logout Section -->
+        <div class="section">
+            <h2>🔒 Logout</h2>
+            <p>End your session safely.</p>
+            <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+        </div>
+    </div>
+
+    <script>
+        function animateCounter(id, target) {
+            let element = document.getElementById(id);
+            let count = 0;
+            let step = Math.ceil(target / 40); // Speed of animation
+            let interval = setInterval(() => {
+                count += step;
+                if (count >= target) {
+                    count = target;
+                    clearInterval(interval);
+                }
+                element.textContent = count;
+            }, 30);
+        }
+
+        function loadSummary() {
+            fetch("/get_summary")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("summary").style.display = "block";
+                    animateCounter("totalProducts", data.total_products);
+                    animateCounter("totalStock", data.total_stock);
+                    animateCounter("lowStock", data.low_stock);
+                    animateCounter("outOfStock", data.out_of_stock);
+                });
+        }
+    </script>
+
+</body>
+</html>

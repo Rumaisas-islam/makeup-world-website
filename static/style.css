@@ -1,0 +1,191 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+}
+
+.sidebar {
+    width: 230px;
+    background: #ff4da6;
+    color: white;
+    height: 100vh;
+    padding: 20px;
+    position: fixed;
+}
+
+.sidebar h2 {
+    margin-bottom: 30px;
+}
+
+.sidebar a {
+    display: block;
+    padding: 10px;
+    margin: 8px 0;
+    text-decoration: none;
+    color: white;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.sidebar a:hover, .sidebar .active {
+    background: #ff1a8c;
+}
+
+.main {
+    margin-left: 250px;
+    padding: 20px;
+    flex: 1;
+}
+
+.filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filters input, .filters select, .filters button {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.filters button {
+    background: #ff4da6;
+    color: white;
+    cursor: pointer;
+    border: none;
+}
+
+.filters button:hover {
+    background: #ff1a8c;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table th, table td {
+    border: 1px solid #f0f0f0;
+    padding: 12px;
+    text-align: center;
+}
+
+.product-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.badge.in {
+    background: #ccf5e1;
+    color: #009933;
+}
+
+.badge.low {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.edit-btn, .delete-btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.edit-btn {
+    background: #e6f0ff;
+    color: #004080;
+}
+
+.delete-btn {
+    background: #ffe6e6;
+    color: #b30000;
+}
+/* LOGIN PAGE */
+.login-body {
+    background: linear-gradient(135deg, #ff4da6, #ff80bf);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+.login-container {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    width: 350px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.login-container h2 {
+    color: #ff1a8c;
+    margin-bottom: 10px;
+}
+
+.login-container h3 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.form-group input:focus {
+    border-color: #ff4da6;
+    box-shadow: 0 0 5px rgba(255, 77, 166, 0.5);
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #ff4da6;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.login-btn:hover {
+    background: #ff1a8c;
+}
+
+.login-footer {
+    margin-top: 15px;
+    font-size: 12px;
+    color: #888;
+}

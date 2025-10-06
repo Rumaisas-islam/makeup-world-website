@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Product</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    body {
+      background-color: #fffafc;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .container {
+      margin-top: 60px;
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      max-width: 600px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #ff4da6;
+      font-weight: 600;
+      margin-bottom: 25px;
+    }
+
+    label {
+      font-weight: 500;
+      color: #333;
+    }
+
+    input, select, textarea {
+      border-radius: 10px !important;
+      border: 1px solid #ddd !important;
+      padding: 10px;
+      transition: border-color 0.3s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #ff4da6 !important;
+      box-shadow: 0 0 0 0.15rem rgba(255, 77, 166, 0.25);
+    }
+
+    .btn-submit {
+      background-color: #ff4da6;
+      color: white;
+      font-weight: 500;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 10px;
+      transition: 0.3s;
+      width: 100%;
+    }
+
+    .btn-submit:hover {
+      background-color: #ff1a8c;
+    }
+
+    .btn-back {
+      background-color: #6c757d;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 10px;
+      width: 100%;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+      transition: 0.3s;
+    }
+
+    .btn-back:hover {
+      background-color: #555;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>✨ Add New Product</h2>
+    <form method="POST" action="{{ url_for('add_product') }}">
+      <div class="mb-3">
+        <label for="name">Product Name</label>
+        <input type="text" name="name" id="name" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="price">Price (PKR)</label>
+        <input type="number" name="price" id="price" step="0.01" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="company">Company</label>
+        <input type="text" name="company" id="company" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="category">Category</label>
+        <select name="category" id="category" class="form-select" required>
+          <option value="">Select Category</option>
+          <option value="Makeup">Makeup</option>
+          <option value="Skincare">Skincare</option>
+          <option value="Haircare">Haircare</option>
+          <option value="Fragrance">Fragrance</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="use">Use / Description</label>
+        <textarea name="use" id="use" rows="3" class="form-control" required></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="stock">Stock Quantity</label>
+        <input type="number" name="stock" id="stock" class="form-control" required>
+      </div>
+
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn-submit">Add Product</button>
+        <a href="{{ url_for('show_products') }}" class="btn-back">Back to Products</a>
+      </div>
+    </form>
+  </div>
+
+  <!-- SweetAlert Flash Messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <script>
+        {% for category, message in messages %}
+          Swal.fire({
+            icon: "{{ 'success' if category == 'success' else 'info' }}",
+            title: "{{ message }}",
+            showConfirmButton: false,
+            timer: 1800,
+            background: '#fff6f8',
+            color: '#ff4da6',
+            iconColor: '#ff4da6'
+          });
+        {% endfor %}
+      </script>
+    {% endif %}
+  {% endwith %}
+</body>
+</html>
